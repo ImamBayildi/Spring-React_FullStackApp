@@ -110,8 +110,6 @@ export default function Login() {
               <Grid item xs>
                 <Link href="#" onClick={() => getSnackBar("Bu seçenek henüz mevcut değil. Sonraki versiyonu bekleyin","info")} variant="body2">
                   Şifreni hatırlamıyor musun?
-                  <br/>
-                  Sonraki versiyonu bekle!
                 </Link>
               </Grid>
               <Grid item>
