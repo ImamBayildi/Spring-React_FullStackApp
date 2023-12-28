@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import com.labreport.backendlabrep.config.MyKeyGenerator;
+import com.labreport.backendlabrep.config.KeyGenerator;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -22,7 +22,7 @@ public class JwtService {
 
     private final String aKey;
     
-    public JwtService(MyKeyGenerator myKeyGenerator) {
+    public JwtService(KeyGenerator myKeyGenerator) {
         this.aKey = myKeyGenerator.aKeyGenerate();
     }
 
