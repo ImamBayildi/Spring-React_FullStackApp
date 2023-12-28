@@ -31,7 +31,6 @@ public class ReportService {
         this.technicianService = technicianService;
     }
 
-    @Deprecated
     public List<Object[]> getAllReportJOINwriter() {
         List<Object[]> result = reportRepository.getReportsJoinWriter();
             return result;
