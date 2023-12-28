@@ -9,10 +9,6 @@ public enum Role implements GrantedAuthority {
 
     private String value;
 
-    /**
-     * Parametre olarak gelen rol adını tutar.
-     * @param value rol adı
-     */
     Role(String value) {
         this.value = value;
     }
@@ -20,11 +16,7 @@ public enum Role implements GrantedAuthority {
     public String getValue() {
         return this.value;
     }
-
-    /**
-     * GrantedAuthority arayüzünden gelen metodu uygular.
-     * @return Kullanıcı rolünün yetki adı
-     */
+    
     @Override
     public String getAuthority() {
         return name();

@@ -30,36 +30,28 @@ public class JwtAuthFilter extends OncePerRequestFilter{
     }
     
     
-    @Override//Interceptor
+    @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-                // JWT'yi Authorization başlığından al
                 String authHeader = request.getHeader("Authorization");
                 String token = null;
                 String userName = null;
                 if(authHeader != null && authHeader.startsWith("Bearer ")){
-                    // JWT 7. karakterden başlıyor
                     token = authHeader.substring(7);
-                    // JWT'den kullanıcı adını çıkart
                     userName = jwtService.extractUser(token);
                 }
 
                 if(userName != null && SecurityContextHolder.getContext().getAuthentication() == null){
-                    // Kullanıcıyı kullanıcı adına göre yükler
-                    UserDetails userDetails = securityService.loadUserByUsername(userName);//Neden UserDetails???
+                    UserDetails userDetails = securityService.loadUserByUsername(userName);
                     System.out.println("userDetails Loaded => " + userDetails);
                     if(jwtService.validateToken(token, userDetails)){
                         System.out.println(" User Detail => "+userDetails);
-                        // Kullanıcıyı kimlik doğrulama token'ıyla kimlik doğrulama bilgilerini oluşturur   //TO DO => Review this UsernamePasswordAuthenticationToken
                         UsernamePasswordAuthenticationToken UPAT = new UsernamePasswordAuthenticationToken(userDetails, null,userDetails.getAuthorities());
-                        // Kimlik doğrulama ayrıntılarını ayarlar
                         UPAT.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                        // Kimlik doğrulama bilgilerini SecurityContextHolder üzerinde ayarlar
                         SecurityContextHolder.getContext().setAuthentication(UPAT);
                         System.out.println("User Authenticated => "+UPAT);
                     }
                 }
-                // filterChain'e devam et
                 filterChain.doFilter(request, response);
     }
     

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.labreport.backendlabrep.entity.Technician;
 import com.labreport.backendlabrep.service.TechnicianService;
 
-//TO DO => Convert to DTO Class
 @RestController
 @RequestMapping("/technician")
 public class TechnicianController {
@@ -29,7 +28,7 @@ public class TechnicianController {
     public ResponseEntity<List<Technician>> getAllTechnician() {
         List<Technician> technicians = technicianService.getAllTechnician();
 
-        if (!technicians.isEmpty()) {// is Present not available
+        if (!technicians.isEmpty()) {
             return ResponseEntity.ok(technicians);
         } else {
             return ResponseEntity.notFound().build();
@@ -47,7 +46,7 @@ public class TechnicianController {
         }
     }
 
-    @PostMapping("/save")//!! TO DO => add password Encoder
+    @PostMapping("/save")
     public ResponseEntity<String> saveTechnician(@RequestBody Technician technician) {
         try {
             Boolean result = technicianService.saveTechnician(technician);
@@ -87,6 +86,5 @@ public class TechnicianController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Sunucuda bir hata meydana geldi: " + e.getMessage());
         }
-
     }
 }

@@ -1,13 +1,10 @@
 import React from "react";
 import { Copyright } from "./Login"
 
-
 export default function ErrorPage(err) {
-  // console.error(err);
 
   return (
     <>
-
     <div id="error-page" style={{ textAlign: "center" }}>
       <h1>Hoppala...</h1>
       <h2>Bu sayfa henüz oluşturulmadı ya da fena çuvalladım!</h2>
@@ -22,4 +19,3 @@ export default function ErrorPage(err) {
     </>
   );
 }
-  // const error = useRouteError();

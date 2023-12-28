@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.1.5</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 	<groupId>com.labreport</groupId>
 	<artifactId>backendlabrep</artifactId>
@@ -59,7 +59,6 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 		<!-- SECURİTY -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -81,7 +80,6 @@
 			<version>${jwt.version}</version>
 		</dependency>
 		<!-- END security -->
-
 		<dependency>
 			<groupId>org.modelmapper</groupId>
 			<artifactId>modelmapper</artifactId>
@@ -129,7 +127,6 @@
 							<npmVersion>10.2.4</npmVersion>
 						</configuration>
 					</execution>
-
 					<!-- running npm install -->
 					<execution>
 						<id>npm install</id>
@@ -141,7 +138,6 @@
 							<arguments>install</arguments>
 						</configuration>
 					</execution>
-
 					<!-- build our production version -->
 					<execution>
 						<id>npm build</id>
@@ -184,12 +180,10 @@
 			</plugin>
 		<!-- https://github.com/eirslett/frontend-maven-plugin#installation -->
 		<!-- @An example => https://github.com/wazooinc/spring-boot-packaging-with-react/blob/main/pom.xml -->
-
 		</plugins>
 	</build>
 
 </project>
-
 
 <!-- <configuration>
     <testFailureIgnore>true</testFailureIgnore>

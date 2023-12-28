@@ -13,7 +13,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data   //TO DO => Manuel Generate
+@Data
 @Entity
 @Table(name = "t_technician")
 @Builder
@@ -44,27 +44,24 @@ public class Technician implements UserDetails{
     
     // This relation throwing exception => https://www.baeldung.com/hibernate-initialize-proxy-exception
     // @OneToMany(mappedBy = "writer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    // private Set<Report> reports; //List == Set: ???
+    // private Set<Report> reports;
 
-    // @OneToMany(fetch = FetchType.EAGER)
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @JoinTable(name = "authorities", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     private Set<Role> authorities;
 
+    private boolean accountNonExpired;
+    private boolean isEnabled;
+    private boolean accountNonLocked;
+    private boolean credentialsNonExpired;
+
     @Override
     public String getUsername() {// for auth
         return email;
     }
 
-    //Kullanıcının hesap süresi dolmuş mu?
-    private boolean accountNonExpired;
-    //Kullanıcının hesabı etkin mi?
-    private boolean isEnabled;
-    //Kullanıcının hesabı kilitli mi?
-    private boolean accountNonLocked;
-    //Kullanıcının kimlik doğrulama bilgileri süresi dolmuş mu?
-    private boolean credentialsNonExpired;
+
 
 }

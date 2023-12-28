@@ -1,8 +1,5 @@
-
 import { Button, Modal, Box } from '@mui/material';
 import {Typography} from '@material-ui/core';
-
-
 
 export default function ConfirmationDeleteModal(prop) {
 

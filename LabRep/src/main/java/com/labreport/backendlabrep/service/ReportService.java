@@ -32,24 +32,8 @@ public class ReportService {
     }
 
     @Deprecated
-    public List<Object[]> getAllReportJOINwriter() {//TO DO => Convert Response data to HashMap
+    public List<Object[]> getAllReportJOINwriter() {
         List<Object[]> result = reportRepository.getReportsJoinWriter();
-
-           /*  List<ReportDto> resultList = result.stream()
-            .map(row -> new ReportDto(
-                    (Long) row[0],
-                    (String) row[1],
-                    (String) row[2],
-                    (String) row[3],
-                    (String) row[4],
-                    (Date) row[5],
-                    (Technician) row[6],
-                    (byte[]) row[7]
-            )).collect(Collectors.toList());
-//OR
-            List<ReportDto> resuList2 = result.stream()
-                .map(reportDtoConverter::objectToDto).collect(Collectors.toList());*/
-
             return result;
     }
 
@@ -71,7 +55,7 @@ public class ReportService {
 
     public Boolean deleteReportById(Long id) {
         try {
-            reportRepository.deleteById(id);//.deleteById() is not have a return value, do i need sql response? (when 0 rows effected)
+            reportRepository.deleteById(id);
             return true;
         } catch (EmptyResultDataAccessException e) {
             throw e;
@@ -96,7 +80,7 @@ public class ReportService {
 
     public List<ReportDto> getReportByFullName(String fullName) {
         List<Report> report = reportRepository.findByFullName(fullName);
-        return report.parallelStream().map(reportDtoConverter::convertToDto)// report -> this.convertToDto(report)
+        return report.parallelStream().map(reportDtoConverter::convertToDto)
                 .collect(Collectors.toList());
     }
 
@@ -109,24 +93,13 @@ public class ReportService {
 
     public List<ReportDto> getReportByTechnician(String technicianName) {
         Technician technician = technicianService.findByFullName(technicianName);
-        List<Report> reportList = reportRepository.findByWriter(technician);// Dont get other repository
+        List<Report> reportList = reportRepository.findByWriter(technician);
         return reportList.stream().map(reportDtoConverter::convertToDto).collect(Collectors.toList());
     }
 
-    //<<<<<<<<<PAGINATION>>>>>>>>>>
     public Page<ReportDto> getReportPagination(Pageable pageAble) {
-        // Pageable pageable = PageRequest.of(page, size);
         Page<Report> pReport = reportRepository.findAll(pageAble);
-        //Page<Report> => all Reports to ReportDto => Page<ReportDto>
         Page<ReportDto> reportDto = pReport.map(report -> reportDtoConverter.pageToDto(report));
         return reportDto;
-    }
-
-    
+    }   
 }
-
-/*
- * if(reportDto.reportDate() == null) {
- * reportDto.setReportDate(new java.sql.Date(new java.util.Date().getTime()));
- * }
- */

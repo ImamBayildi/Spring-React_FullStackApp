@@ -1,5 +1,4 @@
 package com.labreport.backendlabrep.controller;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.labreport.backendlabrep.dto.ReportDto;
 import com.labreport.backendlabrep.service.ReportService;
-// import org.springframework.web.bind.annotation.RequestParam;
 
-
-//TO DO => Error Handling
 @RestController
 @RequestMapping("/report")
 public class ReportController {
@@ -64,7 +60,6 @@ public class ReportController {
         System.out.println(reportDto.getPhoto());
         reportDto.setReportDate(new java.util.Date());
         Boolean result = reportService.saveReport(reportDto);
-
         return result? ResponseEntity.ok(result): ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
@@ -97,13 +92,4 @@ public class ReportController {
         List<ReportDto> reportDto = reportService.getReportByTechnician(technicianName);
         return ResponseEntity.ok(reportDto);
     }
-    
-
-    
-        /*
-     * org.springframework.http.HttpHeaders header = new
-     * org.springframework.http.HttpHeaders();
-     * header.setContentType(MediaType.APPLICATION_JSON);
-     * return ResponseEntity.ok().headers(header).body(reportList);
-     */
 }

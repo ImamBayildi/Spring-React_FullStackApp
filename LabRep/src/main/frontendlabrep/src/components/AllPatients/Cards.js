@@ -25,7 +25,6 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-
 export default function Cards(props) {
   const [expanded, setExpanded] = React.useState(false);
 
@@ -33,8 +32,6 @@ export default function Cards(props) {
     setExpanded(!expanded);
   };
 
-
-  // console.log(atob(props.photo))
   return (
     <Card sx={{ width: '200px', padding: '10px', margin: '25px', bgcolor:'' }}>
       <CardHeader
@@ -43,18 +40,13 @@ export default function Cards(props) {
             {props.fullName[0]}
           </Avatar>
         }
-        action={null
-          // <IconButton aria-label="settings">
-          //   <MoreVertIcon />
-          // </IconButton>
-        }
+
         title={props.fullName}
         subheader={props.reportDate}
       />
       <CardMedia
         component="img"
         height="194"
-        // => data:image/png;base64,
         image={`${atob(props.photo)}`}
         alt="Rapor Fotografi"
       />
@@ -65,12 +57,6 @@ export default function Cards(props) {
       </CardContent>
 
       <CardActions disableSpacing>
-        {/* <IconButton aria-label="Düzenle">
-          <DrawIcon />
-        </IconButton>
-        <IconButton aria-label="Sil">
-          <DeleteForeverTwoToneIcon />
-        </IconButton> */}
         <Typography variant="body2" color="text.secondary">
           Son Tanı: {props.reports[0].diagnosis}
         </Typography>
@@ -87,16 +73,6 @@ export default function Cards(props) {
         <CardContent>
           <Typography paragraph>Raporlar:</Typography>
 
-          <div>
-            {/* {props.diagnosis.map((detail, index) => (
-              <Typography key={index} paragraph>
-                {detail.diagnosis} - {detail.details} - {detail.reportDate}
-                {props.diagnosis.join(', ')}
-              </Typography>
-            ))} */}
-            {/*console.log(props)*/}
-          </div>
-
           {props.reports.map((v) => {
             return (
               <Typography key={props.id} paragraph>
@@ -104,7 +80,6 @@ export default function Cards(props) {
               </Typography>
             )
           })}
-
         </CardContent>
       </Collapse>
     </Card>

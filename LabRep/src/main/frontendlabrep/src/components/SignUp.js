@@ -11,17 +11,11 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Navigate } from 'react-router-dom';
 import { UserContext } from '../context/Context';
 import { Copyright } from './Login';
 import GetSnackBar from './smallComponents/SnackBar';
-import { useState } from 'react';
-
-
-// TODO remove, this demo shouldn't need to reset the theme.
-      
-
 
 export default function SignUp() {
   const [isCreated,setIsCreated] = React.useState(false);
@@ -93,7 +87,6 @@ function getSnackBar(message, severity) {
   return (
     <>
       { isCreated? (<Navigate to="/login" />) : (null) }
-        {/* <ThemeProvider theme={defaultTheme} sx={{ backgroundColor: 'black' }}></ThemeProvider> */}
         <GetSnackBar open={open} message={snackBarmessage} severity={snackBarSeverity} handleClose={handleCloseSnackBar}></GetSnackBar>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -189,4 +182,3 @@ function getSnackBar(message, severity) {
     </>
   );
 }
-

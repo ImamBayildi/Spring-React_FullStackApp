@@ -3,7 +3,6 @@ import React, { createContext, useState, useEffect } from 'react';
 
 export const UserContext = createContext();
 
-//TO DO => Sayfa yenilemelerinde veri sıfırlanıyor. Hatta bazen yönlendirmede bile. Local Storage gibi birşey mi kullanmalıyım? Ya da belki memorization
 export function UserProvider({ children }) {
 
   const [contextUser, setContextUser] = useState({
@@ -55,11 +54,7 @@ export function UserProvider({ children }) {
       isEnable: true
     });
   };
-
-
-  // const getLocalStorage = () => JSON.parse(localStorage.getItem('user'));  //gizli modda sorun çıkarıyor.
   
-
   const logOut = () => {
     setContextUser({
       id: null,
@@ -80,8 +75,7 @@ export function UserProvider({ children }) {
       authorities: [],
     }));
   };
-
-
+  
   return (
     <UserContext.Provider value={{ contextUser, logIn, logOut }}>
       {children}

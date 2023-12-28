@@ -33,13 +33,12 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain mSecurityFilterChain(HttpSecurity httpSec) {// OMG! I dont call this method?!?
+    public SecurityFilterChain mSecurityFilterChain(HttpSecurity httpSec) {
         try {
             return httpSec
                     .csrf(AbstractHttpConfigurer::disable)
-                    .authorizeHttpRequests(// <<<<<<PATH REQUEST MANAGEMENT>>>>>>>
+                    .authorizeHttpRequests(
                             auth -> auth
-                                    // .requestMatchers("/**").permitAll()
                                     .requestMatchers("/signIn/**", "/signUp/**", "/auth/**").permitAll()
                                     .requestMatchers("/report/getByFullName/**", "/report/getByTc/**").permitAll()
                                     .requestMatchers("/report/**").hasAnyRole("TECH", "MASTER")
@@ -58,20 +57,13 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationProvider authenticaticationProvider() {// @RETURN AuthenticationProvider object with DaoAuthenticationProvider
+    public AuthenticationProvider authenticaticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(mySecurityService);
         authenticationProvider.setPasswordEncoder(myPasswordEncoder);
         return authenticationProvider;
     }
 
-    /**
-     * AuthenticationManager object.
-     * 
-     * @param configuration AuthenticationConfiguration object
-     * @return AuthenticationManager object
-     * @throws Exception Any exception state
-     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();

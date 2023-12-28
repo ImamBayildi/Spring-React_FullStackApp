@@ -3,12 +3,9 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { cyan, grey, blue, blueGrey, indigo } from '@mui/material/colors';
 
-
-
 export const ColorModeContext = React.createContext();
 export default function MyThemeProvider({ children }) {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-
 
   const getColor = (mode) => ({
     palette: {
@@ -61,9 +58,6 @@ export default function MyThemeProvider({ children }) {
     },
   });
 
-
-
-
   const [mode, setMode] = React.useState(prefersDarkMode ? 'light' : 'dark');
   const colorMode = React.useMemo(
     () => ({
@@ -73,7 +67,6 @@ export default function MyThemeProvider({ children }) {
     }),
     [],
   );
-
   const modeTheme = createTheme(getColor(mode));
   return (
     <ColorModeContext.Provider value={{modeTheme, toggleColorMode:colorMode.toggleColorMode}}>
@@ -83,61 +76,3 @@ export default function MyThemeProvider({ children }) {
     </ColorModeContext.Provider>
   );
 }
-//https://mui.com/material-ui/customization/dark-mode/
-
-
-
-/*
-
-  const getColor = (mode) => ({
-    palette: {
-      mode,
-      primary: {
-        ...cyan,
-        ...(mode === 'light' ? ({
-          main: cyan[600],
-          secondary: cyan[400],
-          heavy: cyan[900],
-          light: cyan[100],
-          thirty: pink[700]
-        }) : (
-          {
-            main: teal[900],
-            secondary: cyan[800],
-            heavy: grey[900],
-            light: cyan[300],
-            thirty: pink[900]
-          }
-        )),
-      },
-      ...(mode === 'dark' ? ({
-        background: {
-          default: cyan[900],
-          paper: teal[800],
-          light: teal[300],
-        },
-      }) : (
-        {
-          background: {
-            default: cyan[50],
-            paper: teal[300],
-            light: cyan[100],
-          },
-        }
-      )
-      ),
-      text: {
-        ...(mode === 'light'
-          ? {
-            primary: grey[900],
-            secondary: grey[800],
-          }
-          : {
-            primary: '#fff',
-            secondary: grey[300],
-          }),
-      },
-    },
-  });
-
-  */

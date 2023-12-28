@@ -17,7 +17,7 @@ import com.labreport.backendlabrep.repository.TechnicianRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 
-@Service//TO DO => Move this code to Technician Service
+@Service
 public class SecurityService implements UserDetailsService {
     private final TechnicianRepository technicianRepository;
     private final TechnicianDtoConverter technicianDtoConverter;
@@ -32,7 +32,7 @@ public class SecurityService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Technician> x = technicianRepository.findByEmail(username);//username yerine email dönecek.
+        Optional<Technician> x = technicianRepository.findByEmail(username);//username is email
         return x.orElseThrow(EntityNotFoundException::new);
     }
 
@@ -46,15 +46,13 @@ public class SecurityService implements UserDetailsService {
             null,
             req.fullName(),
             req.email(),
-            bCryptPasswordEncoder.encode(req.password()),//WARN => pw need encoder
+            bCryptPasswordEncoder.encode(req.password()),
             new Date(),
             true,
-            //null,
             req.authorities(),
             true, true, true, true
         );
-
-        return technicianRepository.save(technician);//TechnicianRepository.class.getInterfaces().save(technician)
+        return technicianRepository.save(technician);
     }
     
 }

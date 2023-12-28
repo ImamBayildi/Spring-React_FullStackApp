@@ -10,5 +10,4 @@ public class rootController {
     public String hello() {
         return "forward:/index.html";
     }
-    
 }

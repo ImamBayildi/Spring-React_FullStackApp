@@ -2,40 +2,24 @@ import './App.css';
 import Login from './components/Login';
 import Navbar from './components/Navbar';
 import SignUp from './components/SignUp';
-import Cards from './components/AllPatients/Cards';
 import PatientList from './components/AllPatients/PatientList';
 import PatientQuery from './components/BasicQuery/PatientQuery';
-// import { Routes,Route,Link, NavLink, Router } from 'react-router-dom';
-import { Route, Routes } from 'react-router-dom';// "<BrowserRouter/> => index.js"
-import { IconButton } from '@mui/material';
+import { Route, Routes } from 'react-router-dom';
 import ReportDefine from './components/ReportDefine/ReportDefine';
 import AllReports from './components/AllReports/AllReports'
 import Master from './components/Master';
 import ErrorPage from './components/ErrorPage';
 import CssBaseline from '@mui/material/CssBaseline';
 
-import { Box } from '@material-ui/core';
 import { UserContext } from './context/Context';
-import { useContext, createContext } from 'react';
+import { useContext } from 'react';
 import Profile from './components/Profile';
 
-import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
-
-
-// import IconButton from '@mui/material/IconButton';
-// import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
-// import Brightness4Icon from '@mui/icons-material/Brightness4';
-// import Brightness7Icon from '@mui/icons-material/Brightness7';
-
-
-
 function App() {
-  const { contextUser,getLocalStorage } = useContext(UserContext);
+  const { contextUser } = useContext(UserContext);
   const userData = contextUser;
   console.log("App.js userData => ");
 
-
- 
   return (
     <>
       <CssBaseline/>
@@ -63,24 +47,9 @@ function App() {
             <Route path="/Profile" element={<Login  key={6}/>}/>
             <Route path="/SignUp" element={<SignUp  key={6}/>}/>
             <Route path="*" element={<ErrorPage  key={7}/>}/>
-            {/* <Navigate to="/error" /> */}
           </>
         )}
-
-        {/*
-          my_pages.map((page,index) => (
-            <Route path={`/${page}`} element={components[index]}/>
-          ))
-          */}
       </Routes>
-
-
-      {/* {theme.palette.mode} mode
-      <IconButton sx={{ ml: 1 }} onClick={() => console.log("s")} color="inherit">
-        {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-      </IconButton> */}
-
-    
     </>
   );
 }

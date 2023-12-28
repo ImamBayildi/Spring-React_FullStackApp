@@ -7,7 +7,6 @@ import jakarta.persistence.*;
 
 @Table(name = "t_report")
 @Entity
-// @Data
 public class Report {
 
     @Id
@@ -30,16 +29,16 @@ public class Report {
     @Temporal(TemporalType.DATE)
     private Date reportDate;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.REFRESH }) // EAGER => her raporu çektiğimde getir.
+    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.REFRESH })
     @JoinColumn(name = "writer_ID")
     private Technician writer;
 
     @Column(name = "photo")
-    @Lob // Big Data
+    @Lob
     private byte[] photo;
 
     // <<<<Constructor>>>>
-    public Report() {// WARN => Default Constructor'ı unutma!!!
+    public Report() {
     }
 
     public Report(String fullName, String tc, String diagnosis, String details,
@@ -190,6 +189,4 @@ public class Report {
             return false;
         return true;
     }
-
 }
-// @Transactional - jakarta EE ? SE :

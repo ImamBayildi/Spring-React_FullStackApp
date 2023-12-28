@@ -1,15 +1,9 @@
 package com.labreport.backendlabrep;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Base64;
@@ -20,20 +14,13 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-// import org.springframework.boot.autoconfigure.domain.EntityScan;
-// import org.springframework.context.annotation.ComponentScan;
-// import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.fasterxml.jackson.core.util.ByteArrayBuilder;
 import com.labreport.backendlabrep.dto.Role;
 import com.labreport.backendlabrep.entity.Report;
 import com.labreport.backendlabrep.entity.Technician;
 import com.labreport.backendlabrep.repository.ReportRepository;
 import com.labreport.backendlabrep.repository.TechnicianRepository;
-
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
 
 @SpringBootApplication
 public class BackendlabrepApplication implements CommandLineRunner {
@@ -52,18 +39,15 @@ public class BackendlabrepApplication implements CommandLineRunner {
 	public static void main(String[] args) {
 		SpringApplication.run(BackendlabrepApplication.class, args);
 	}
-
+	
 	@Override
-	public void run(String... args) throws Exception {//TO DO => Http request for random image =>	https://picsum.photos/
-		// String secretKEY = Keys.secretKeyFor(SignatureAlgorithm.HS256).toString();
-		// System.out.println("secret key: "+secretKEY.toString());
-
-		doldurMeyhaneci(100,10);//WARN => Second image length parameter must be < 10||20. Threads too long
+	public void run(String... args) throws Exception {
+		generateRandomData(100,10);
 		System.out.println("LabRep App is ready.. Visit to 'localhost:8080/'");
 	}
 
-	protected void doldurMeyhaneci(int reportLength, int imgLength) throws Exception { // Generate Random Data. WARN => close your eyes.
-		// int randomWithMathRandom = (int) ((Math.random() * (max - min)) + min);
+	protected void generateRandomData(int reportLength, int imgLength) throws Exception {
+		if (imgLength > 15) imgLength = 15;
 		Set<Role> techRole = new HashSet<>();
 		Role getTechRole = Role.ROLE_TECH;
 		techRole.add(getTechRole);
@@ -74,17 +58,14 @@ public class BackendlabrepApplication implements CommandLineRunner {
 
 		System.out.println(getTechRole);
 
-		
 		String[] technicianNames = { "Ayşe Yılmaz", "Kıvanç Tatlıtuğ", "Damla Öztürk", "Ali Aydın", "Ahmet Kaya","Burak Koç", "Elif Nur Şahin", "Can Ergin", "Yasemin Taş", "Hüseyin Çelik" };
-		String password = bCryptPasswordEncoder.encode("0000"); // WARN => throwing exception on the login request => (Encoded password does not look like BCrypt) need to BCrypt.encode
+		String password = bCryptPasswordEncoder.encode("0000");
 		technicianRepository.save(new Technician(null, "Özgür Yazılım", "bilgi@ozguryazilim.com.tr", password,
 				generateRandomDate(), true,
-				//null,
 				master, true, true, true, true));
 		for (int i = 0; i < technicianNames.length; i++) {
 			technicianRepository.save(new Technician(null, technicianNames[i], (technicianNames[i] + "@mail.com")
 					.replaceAll("\\s", ""), password, generateRandomDate(), true,
-					//null, 
 					techRole, true, true, true,true));
 		}
 
@@ -94,18 +75,17 @@ public class BackendlabrepApplication implements CommandLineRunner {
 		String[] surNames = { "Yılmaz", "Demir", "Öztürk", "Aydın", "Kaya"};
 		byte[][] images = getRandomImage(imgLength);
 
-
-		for (int i = 0; i < reportLength; i++) {// X => random report length
-			Long randomId = Math.round((Math.random() * (10 - 1)) + 1);// Cannot cast from double to Long
+		for (int i = 0; i < reportLength; i++) {
+			Long randomId = Math.round((Math.random() * (10 - 1)) + 1);
 			int random1 = (int) ((Math.random() * (names.length - 0)) + 0);
 			int random2 = (int) ((Math.random() * (surNames.length - 0)) + 0);
 			int random3 = (int) ((Math.random() * (diagnosis.length - 0)) + 0);
 			int imageLengthRandom = (int) ((Math.random() * (imgLength - 0)) + 0);
 			System.out.println("Image Value : " + imageLengthRandom);
-			int tc = (int) ((Math.random() * (100 - 0)) + 1735978300);//dublicate rate = 100/reportLength
+			int tc = (int) ((Math.random() * (100 - 0)) + 1735978300);
 			String randomTc = "1" + String.valueOf(tc);
 			String fullName = names[random1] + " " + surNames[random2];
-
+			
 			Technician randomTechnician = technicianRepository.findById(randomId).orElse(null);
 			
 			reportRepository.save(new Report(fullName, randomTc, diagnosis[random3], details, generateRandomDate(),
@@ -124,9 +104,7 @@ public class BackendlabrepApplication implements CommandLineRunner {
 		return new Date(randomMillisSinceEpoch);
 	}
 
-
-	//https://vaadin.com/blog/saving-and-displaying-images-using-jpa
-	protected byte[][] getRandomImage(int x) throws Exception {// GET => https://picsum.photos/
+	protected byte[][] getRandomImage(int x) throws Exception {
 		URL url = new URL("https://picsum.photos/200/300");
 		
 		byte[][] imageArrays = new byte[x][];
@@ -149,22 +127,18 @@ public class BackendlabrepApplication implements CommandLineRunner {
 				if (responseCode == HttpURLConnection.HTTP_OK) {
 					inputStream = con.getInputStream();
 					byteArrayOutputStream = new ByteArrayOutputStream();
-		
-					
+
 					byte[] buffer = new byte[1024];
 					int bytesRead;
-
-					//data:image/png;base64,
 					while ((bytesRead = inputStream.read(buffer)) != -1) {//By CodeiumAI
 						byteArrayOutputStream.write(buffer, 0, bytesRead);
 					}
-							
+
 					byte[] base64Image = ("data:image/png;base64," + Base64.getEncoder().encodeToString(
 						byteArrayOutputStream.toByteArray())).getBytes();
 					imageArrays[index] = base64Image;
 					System.out.println("[INFO] - Random Image: " + byteArrayOutputStream.toByteArray().length);
 				}
-				// Thread.sleep(2500);
 			} catch (Exception e) {
 				System.out.println("[ERROR] - RandomImage API request is broken => " + e.getMessage());
 			} finally {
@@ -177,23 +151,3 @@ public class BackendlabrepApplication implements CommandLineRunner {
 		return imageArrays;
 	}
 }
-
-
-// byte[] base64Image = Base64.getEncoder().encode(
-// 						("data:image/png;base64," + Base64.getEncoder().encodeToString(
-// 							byteArrayOutputStream.toByteArray()
-// 							)).getBytes());
-//                 imageArrays[index] = base64Image;
-
-
-	// for (int index = 0; index < images.length; index++) {
-		// 	// byte[][] res;
-		// 	// byte[] q = "data:image/png;base64,".getBytes();
-		// 	// byte[] mergedImage = new byte[q.length + images[index].length];
-		// 	// System.arraycopy(q, 0, mergedImage, 0, q.length);
-		// 	// System.arraycopy(images[index], 0, mergedImage, q.length, images[index].length);
-		// 	// images[index] = mergedImage;
-		// 	images[index] = Base64.getEncoder().encode(images[index]);
-
-		// 	System.out.println("IMAGE VALUE : " + images[index]);
-		// }

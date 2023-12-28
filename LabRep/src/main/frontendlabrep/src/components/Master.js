@@ -2,7 +2,6 @@
 import * as React from 'react';
 import { Copyright } from "@material-ui/icons";
 
-
 export default function Master() {
   return (
     <div id="master-page" style={{ textAlign: "center" }}>
@@ -12,4 +11,3 @@ export default function Master() {
     </div>
   );
 }
-  // const error = useRouteError();

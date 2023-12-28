@@ -8,10 +8,8 @@ import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
-
 import { useContext } from 'react';
 import { UserContext } from '../../context/Context';
-
 
 export default function SplitButton({ eventProp, options }) {
 
@@ -20,11 +18,7 @@ export default function SplitButton({ eventProp, options }) {
   const { contextUser } = useContext(UserContext);
   const [selectedIndex, setSelectedIndex] = React.useState(0);// Button variable
 
-
-
-
   const handleMenuItemClick = (event, index) => {
-    // setSelectedItem(selectedItem);//for props
     setSelectedIndex(index);
     setOpen(false);
   };
@@ -37,12 +31,9 @@ export default function SplitButton({ eventProp, options }) {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
-
     setOpen(false);
   };
-
-
-
+  
   return (
     <React.Fragment>
       <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button" style={{ marginLeft: '1.5rem' }}>

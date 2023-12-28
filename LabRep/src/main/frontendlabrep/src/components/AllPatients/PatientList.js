@@ -10,15 +10,6 @@ export default function PatientList() {
   const { contextUser } = useContext(UserContext);
   const [list, setList] = useState([]);
 
-  // {
-  //   headers: {
-  //     Accept: 'application/json',
-  //     Authorization: 'Bearer Token',
-  //     'X-Custom-Header': 'header value'
-  //   }
-  // }
-
-
   useEffect(() => {
     fetch("/report/getAll", {
       headers: {
@@ -49,14 +40,10 @@ export default function PatientList() {
             groupedData[tc].reports.push({ diagnosis, details, reportDate });
           }
         });
-
         const mergedData = Object.values(groupedData);
-
-        // console.log("Merged Data : " + mergedData)
         return mergedData
       })
       .then(mergedData => setList(mergedData))
-      // .then(mergedData => {console.log(mergedData[0])})
       .catch(error => {
         console.error("Fetch error:", error);
       });
@@ -68,11 +55,6 @@ export default function PatientList() {
     setSearchValue(param)
   }
 
-
-
-  //list[x].reports: {diagnosis,details,reportDate}
-
-
   return (
     <>
       <div style={{ marginTop: "2rem", display: "flex", flexWrap: "wrap", justifyContent: 'space-evenly' }}>
@@ -81,7 +63,7 @@ export default function PatientList() {
           <h4>Sunucu başlatıldığında rastgele üretilen veriler burada <u>kimlikleriyle</u> birleştirilerek tek kullanıcı halinde gösterilmiştir.</h4>
           <h4>Ayrıca API aracılığıyla rastgele fotoğraflar veri tabanına kaydedilir. Back-end'i yeniden başlattığınızda resim listesi değişir.</h4>
           <p>Resimlerin kaynağı : <Link to="https://picsum.photos/">https://picsum.photos/</Link> main methodunda bu parametreleri değiştirebilirsiniz.</p>
-          {/* <p>Kartlara ait butonlar henüz çalışmıyor.</p> */}
+          {/* <p> Not working yet card buttons .</p> */}
         </div>
         <Grid container justifyContent="center">
         <TextField autoComplete= "off" id="search" label="Search with name" variant="filled" 
@@ -89,7 +71,6 @@ export default function PatientList() {
           
         </TextField>
           </Grid>
-
         {searchValue === ""?  (list.map((user) => (
           <div key={user.id}>
             <Cards  {...user} />
@@ -104,15 +85,11 @@ export default function PatientList() {
               <div style={{ height: '100px' }}></div>
               </div>
             ) : (null)
-            
           ))
-
         )}
       </div>
     </>
   );
-
-
 }
 
 

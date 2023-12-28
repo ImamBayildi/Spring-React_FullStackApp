@@ -4,7 +4,6 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { forwardRef } from 'react';
 
-
 const Alert = forwardRef(function Alert(
   props,
   ref,

@@ -18,7 +18,6 @@ export default function UpdateModal({ isOpen, closeModal, handleFormSubmit, upda
         }
     }, [isOpen, updateReport])
 
-
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
@@ -45,7 +44,6 @@ export default function UpdateModal({ isOpen, closeModal, handleFormSubmit, upda
                             <Grid item xs={6}>
                             <TextField style={{ width: '90%', marginRight: '1rem' }} variant='filled' label="Hasta Adı" name="fullName" value={formData.fullName} onChange={handleChange} />
                             </Grid>
-                            
                             <Grid item xs={6}>
                             <TextField style={{ width: '100%' }} variant='filled' label="Tanı" name="diagnosis" value={formData.diagnosis} onChange={handleChange} />
                             </Grid>
@@ -54,9 +52,6 @@ export default function UpdateModal({ isOpen, closeModal, handleFormSubmit, upda
                         <TextField variant='filled' label="Detaylar" name="details" multiline minRows={6}
                          value={formData.details} onChange={handleChange} sx={{ width: '100%' }} />
                         </Grid>
-                        {/* <TextField label="Yazan" name="writerName" value={formData.writerName} onChange={handleChange}/> */}
-                        {/* <TextField label="Rapor Tarihi" name="reportDate" value={formData.reportDate} onChange={handleChange}/> */}
-
                     <Button onClick={() => handleFormSubmit(formData)} variant="contained" 
                     style={{ backgroundColor: '#1E88E5', align: 'center', marginTop: '16px', marginInlineStart: '40%',  }}>
                         Kaydet

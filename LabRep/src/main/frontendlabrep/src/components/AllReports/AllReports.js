@@ -16,8 +16,6 @@ import UpdateModal from './UpdateModal';
 import { UserContext } from '../../context/Context';
 import { ColorModeContext } from '../../context/ThemeContext';
 
-
-//TO DO => SnackBar With Update and Delete
 export default function AllReports() {
   return (
     <>
@@ -29,7 +27,6 @@ export default function AllReports() {
             <h4>Veriler ilk başta front-end de sıralandı, fakat sonra 'PagingAndSortingRepository' ile tanıştık.</h4>
             Yazar ve tarih otomatik olarak güncellenecektir.
           </div>
-
           <CardContent>
             <Typography variant="h4" component="div" align='center' color='text.main'>
               Rapor Listesi
@@ -86,8 +83,6 @@ function List() {
       });
   }, [isChangeFormList]);
 
-
-
   const [modalItem, setModalItem] = useState([null])
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const closeModal = () => setModalIsOpen(false);
@@ -104,7 +99,6 @@ function List() {
         }
         else throw new Error("Network delete response was not ok");
       })
-      // .then(resData => setFormList([...formList, resData]))@Deprecated
       .then(setChangeFormlist(!isChangeFormList))
       .then(getSnackBar("Rapor güncellendi", "success"))
       .catch(error => {
@@ -117,11 +111,7 @@ function List() {
     console.log(formItem)
     setModalIsOpen(true);
   }
-
-
-
-
-
+  
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
   const closeConfirmation = () => setIsOpenDeleteModal(false);
   function openDeleteConfirmation(formItem) {
@@ -129,7 +119,6 @@ function List() {
     setModalItem(formItem)
   }
   async function handleDelete(data) {
-    // console.log(`ELEMAN: ${data.id} liste elemanı silinecek `)
 
     fetch(`/report/deleteById/${data.id}`, {
       headers: { "Content-type": "application/json; charset=UTF-8" },
@@ -165,12 +154,11 @@ function List() {
 
   const handlePageChange = (_event, value) => {
     sortingWithParam(value, paginationValues.size, paginationValues.sort)
-  } //How did this param event work?!?
+  }
 
-  //<<<<<<<<<<BACK END PAGINATION>>>>>>>>>>
-  const [, forceUpdateReRender] = useReducer(x => x + 1, 0);  //TO DO => Read useReducer in react documentation
+  const [, forceUpdateReRender] = useReducer(x => x + 1, 0);
   const reRender = () => forceUpdateReRender()
-  async function sortingWithParam(page, size, sort) {//this.forceUpdate() and option for Re-Render component
+  async function sortingWithParam(page, size, sort) {
     await setPaginationValues({
       ...paginationValues,
       page: page == null ? paginationValues.page : page,
@@ -182,14 +170,10 @@ function List() {
     setChangeFormlist(!isChangeFormList)
   }
 
-
-
-
   const { modeTheme } = useContext(ColorModeContext);
   console.log(modeTheme.palette.primary.heavy)
   const forTableAlign = { width: '20%', color : modeTheme.palette.text.primary }
   let question = "Hastaya ait rapor kalıcı olarak silinecek. Emin misiniz?"
-  // variant="h6" component="div" align='left' color='primary'
   return (
     <Card >
       <UpdateModal isOpen={modalIsOpen} closeModal={closeModal} handleFormSubmit={handleModalButton} updateReport={modalItem} />
@@ -214,8 +198,6 @@ function List() {
           <TableBody useRef={reRender}>
 
             {formList.map((form, index) => (
-              // (index < paginationValues.page*10 && index > paginationValues.page*10-10) ? 
-              // buraya bak. hover ekle
               <TableRow key={form.id} selected={true} hover={true} style={{ backgroundColor: modeTheme.palette.background.light }}>
 
                 <TableCell style={{ color: modeTheme.palette.text.primary}}><Typography>{form.id}</Typography></TableCell>
@@ -232,10 +214,8 @@ function List() {
                       }
                       }
                     >
-
                         <TableCell style={forTableAlign}>{form.fullName}</TableCell>
                         <TableCell style={forTableAlign}>{form.diagnosis}</TableCell>
-                        {/* <TableCell>{form.details}</TableCell> */}
                         <TableCell style={forTableAlign}>{form.tc}</TableCell>
                         <TableCell style={forTableAlign}>{form.writer.fullName}</TableCell>
                         <TableCell style={forTableAlign}>{form.reportDate}</TableCell>
@@ -266,7 +246,6 @@ function List() {
                   </ButtonGroup>
 
                 </TableCell>
-
               </TableRow>
             ))}
           </TableBody>
@@ -283,50 +262,6 @@ function List() {
           justifyContent: 'center',
         }} />
 
-
-
     </Card>
-
   );
 };
-
-
-
-
-
-
-//<<<<<<<<<<FRONT END PAGINATION>>>>>>>>>>
-/*const [, forceUpdateReRender] = useReducer(x => x + 1, 0);  //TO DO => Read useReducer in react documentation
-const reRender = () => forceUpdateReRender()
-function sortingWithParam(param) {//this.forceUpdate() adn option for Re-Render component
-  switch (param) {
-    case 1:
-      // setFormList(formList.sort((a, b) => a.id - b.id))// Why not fire Re-Render?
-      formList.sort((a, b) => a.id - b.id)
-      console.log(formList)
-      reRender()
-      break;
-    case 2:
-      formList.sort((a, b) => new Date(a.reportDate) - new Date(b.reportDate)).reverse()
-      console.log(formList)
-      reRender()
-      break;
-    case 3:
-      formList.sort((a, b) => a.fullName.localeCompare(b.fullName))
-      console.log(formList)
-      reRender()
-      break;
-    default:
-      //  //Example
-      // formList.sort((a, b) => {
-      //   if (a[0...5] && !b[0...5]) {
-      //     return -1;
-      //   } else if (![0] && b[0]) {
-      //     return 1;
-      //   } else {
-      //     return 0; // sort local def
-      //   }
-      // });
-      break;
-  }
-}*/

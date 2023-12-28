@@ -8,14 +8,11 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-
 import { useContext, useState } from 'react';
 import {UserContext} from '../context/Context.js';
 import { useNavigate } from 'react-router-dom';
 import { Mail } from '@material-ui/icons';
 import GetSnackBar from './smallComponents/SnackBar.js';
-
-
 
 export default function Login() {
   const navigate = useNavigate();
@@ -23,12 +20,9 @@ export default function Login() {
     email: "error",
     password: 'error',
   })
-  const { contextUser, logIn, logOut } = useContext(UserContext);
+  const { contextUser, logIn } = useContext(UserContext);
   
-
   const handleSubmit = (event) => {
-    // event.preventDefault();
-    // const data = new FormData(user.email,user.password);
     fetch('/auth/login', {//AuthRequest is Object
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -49,7 +43,6 @@ export default function Login() {
     .catch(err => console.log(err.message));
   };
 
-
   //<<<<<SnackBar Handler>>>>
   const [open, setOpen] = useState(false);
   const [snackBarmessage, setMessage] = useState("");
@@ -63,7 +56,6 @@ export default function Login() {
     setOpen(true);
   }
 
-// const theme = useTheme();
   return (
     <>
       <GetSnackBar open={open} message={snackBarmessage} severity={snackBarSeverity} handleClose={() => handleCloseSnackBar()}></GetSnackBar>
@@ -83,7 +75,6 @@ export default function Login() {
             Teknisyen Girişi
           </Typography>
           <Box noValidate sx={{ mt: 1 }}>
-            {/* component="form" onSubmit={handleSubmit} */}
             <TextField
               margin="normal"
               required
@@ -106,7 +97,6 @@ export default function Login() {
               autoComplete="current-password"
               onChange = {(e) => setUser({...user, password: e.target.value})}
             />
-
             <Button
               type="submit"
               fullWidth
@@ -130,7 +120,6 @@ export default function Login() {
                 </Link>
               </Grid>
             </Grid>
-
             <Grid>
             <div style={{fontSize: 16 , paddingTop: 100}}>
             Örnek kullanıcı: AhmetKaya@mail.com
@@ -140,7 +129,6 @@ export default function Login() {
             Tüm şifreler: '0000'
             </div>
             </Grid>
-
           </Box>
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
@@ -148,7 +136,6 @@ export default function Login() {
     </>
   );
 }
-
 
 export function Copyright(props) {
   return (

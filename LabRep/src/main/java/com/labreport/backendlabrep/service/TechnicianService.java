@@ -26,7 +26,7 @@ public class TechnicianService {
         return technicianRepository.findById(id);
     }
 
-    public Boolean saveTechnician(Technician paramTechnician) {//!!! TO DO => Add password encoder
+    public Boolean saveTechnician(Technician paramTechnician) {
         System.out.println(paramTechnician.getId());
         Optional<Technician> exist = technicianRepository.findById(paramTechnician.getId());
         if (exist.isEmpty()) {
@@ -35,7 +35,7 @@ public class TechnicianService {
         }
         return false;
     }
-
+    
     public boolean deleteTechnician(Long id) {//WARN => Only update isWorking column
         Technician stockTechnician = technicianRepository.findById(id).orElse(null);
         if (stockTechnician.getIsWorking()) {
