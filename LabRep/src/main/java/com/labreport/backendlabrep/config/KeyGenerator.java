@@ -9,7 +9,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
 @Configuration
-public class MyKeyGenerator {
+public class KeyGenerator {
     @Bean
     public String aKeyGenerate() {
         int randomValue = (int) ((Math.random() * (1999999999 - 1000000000)) + 1000000000);
