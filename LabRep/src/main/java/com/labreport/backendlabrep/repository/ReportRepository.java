@@ -21,10 +21,8 @@ public interface ReportRepository extends JpaRepository<Report,Long>{
     @Deprecated
     List<Report> findAllByOrderByTc();
 
-    @Deprecated
     List<Report> findByWriterId(Long writerId);
     
-    @Deprecated
     @Query(
   value = "SELECT r.id, r.full_name, r.tc, r.diagnosis, r.details, r.report_date, t.full_name AS writerName FROM t_report r INNER JOIN t_technician t ON r.writer_id = t.id", 
   nativeQuery = true)
