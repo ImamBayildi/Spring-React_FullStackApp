@@ -24,7 +24,6 @@ export default function AllReports() {
           <div style={{ textAlign: "center" }}>
             <h2>Burada tüm raporları listeleyebilir ve sıralayabilirsiniz.</h2>
             <h3>Ayrıca kullanıcı hesabınız ile güncelleme ve silme yapabilirsiniz.</h3>
-            <h4>Veriler ilk başta front-end de sıralandı, fakat sonra 'PagingAndSortingRepository' ile tanıştık.</h4>
             Yazar ve tarih otomatik olarak güncellenecektir.
           </div>
           <CardContent>
